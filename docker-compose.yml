@@ -1,0 +1,28 @@
+services:
+  userstory_api:
+    build: .
+    container_name: userstory_api
+    ports:
+      - "3008:3008"
+    environment:
+      - NODE_ENV=development
+      - PORT=3008
+      - DATABASE_URL=${DATABASE_URL}
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  db:
+    image: postgres:22
+    container_name: userstory_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: userstory
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+

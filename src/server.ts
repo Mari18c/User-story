@@ -1,24 +1,33 @@
-import dotenv from 'dotenv';
+import express from "express";
+import dotenv from "dotenv";
+import authRoutes from "./routes/auth.routes.js";
+import { connectDB, sequelize } from "./config/db.js";
+
 dotenv.config();
 
-import app from './app';
-import { sequelize } from './config/db';
-import { initModels } from './models';
+const app = express();
 
-const PORT = process.env.PORT || 3008;
+// Middleware para parsear JSON
+app.use(express.json());
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log(' Conexión exitosa a la base de datos');
+// Rutas de Auth (register, login, refresh)
+app.use("/api/auth", authRoutes);
 
-    await initModels(); // 👈 Carga los modelos aquí
+// Ruta de prueba
+app.get("/api", (req, res) => res.json({ message: "API funcionando" }));
 
-    app.listen(PORT, () => {
-      console.log(` Servidor corriendo en el puerto ${PORT}`);
-    });
-  } catch (error) {
-    console.error(' Error al iniciar el servidor:', error);
-    process.exit(1);
-  }
-})();
+// Sincronizar modelos con la DB
+await sequelize.sync({ alter: false, force: false });
+
+// Conectar a la base de datos y arrancar el servidor
+connectDB()
+  .then(() => {
+    const PORT = process.env.PORT || 3002;
+    app.listen(PORT, (error) => {
+      if (error) throw error;
+      console.log(`Server running on port ${PORT}`)
+    } );
+  })
+  .catch((err) => console.error("Error al conectar DB:", err));
+
+

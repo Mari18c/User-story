@@ -1,44 +1,31 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, ForeignKey, Default } from "sequelize-typescript";
+import { Cliente } from "./client.model";
+import { Usuario } from "./user.model.js";
 
-const PedidoModel = (sequelize: Sequelize) => {
-  return sequelize.define('pedido', {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    cliente_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'cliente',
-        key: 'id',
-      },
-    },
-    usuario_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'usuario',
-        key: 'id',
-      },
-    },
-    fecha: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    total: {
-      type: DataTypes.DECIMAL(12, 2),
-      defaultValue: 0,
-    },
-    estado: {
-      type: DataTypes.ENUM('pendiente', 'pagado', 'cancelado'),
-      defaultValue: 'pendiente',
-    },
-  }, {
-    tableName: 'pedido',
-    timestamps: false,
-  });
-};
+@Table({
+  tableName: "pedido",
+  timestamps: true,
+  createdAt: "fecha",
+  updatedAt: false,
+})
+export class Pedido extends Model<Pedido> {
+  @PrimaryKey
+  @AutoIncrement
+  @Column({ type: DataType.INTEGER })
+  declare id: number;
 
-export default PedidoModel;
+  @ForeignKey(() => Cliente)
+  @Column({ type: DataType.INTEGER, allowNull: false })
+  cliente_id!: number;
+
+  @ForeignKey(() => Usuario)
+  @Column({ type: DataType.INTEGER })
+  usuario_id!: number;
+
+  @Default("pendiente")
+  @Column({ type: DataType.ENUM("pendiente", "pagado", "cancelado") })
+  estado!: string;
+
+  @Column({ type: DataType.DECIMAL(12, 2), defaultValue: 0 })
+  total!: number;
+}

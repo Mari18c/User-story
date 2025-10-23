@@ -1,41 +1,30 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, Unique } from "sequelize-typescript";
 
-const ProductoModel = (sequelize: Sequelize) => {
-  return sequelize.define('producto', {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    nombre: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    descripcion: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    precio: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-    },
-    stock: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-    },
-    codigo: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      unique: true,
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-  }, {
-    tableName: 'producto',
-    timestamps: false,
-  });
-};
+@Table({
+  tableName: "producto",
+  timestamps: true,
+  createdAt: "created_at",
+  updatedAt: "updated_at",
+})
+export class Producto extends Model<Producto> {
+  @PrimaryKey
+  @AutoIncrement
+  @Column({ type: DataType.INTEGER })
+  declare id: number;
 
-export default ProductoModel;
+  @Column({ type: DataType.STRING, allowNull: false })
+  nombre!: string;
+
+  @Column({ type: DataType.TEXT })
+  descripcion!: string;
+
+  @Column({ type: DataType.DECIMAL(10, 2), allowNull: false })
+  precio!: number;
+
+  @Column({ type: DataType.INTEGER, defaultValue: 0 })
+  stock!: number;
+
+  @Unique
+  @Column({ type: DataType.STRING, allowNull: false })
+  codigo!: string;
+}

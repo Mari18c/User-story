@@ -1,10 +1,11 @@
-import { Router } from 'express';
+import { Router } from "express";
+import authRoutes from "./auth.routes.js";
+import userRoutes from "./user.routes.js";
 
 const router = Router();
 
-// Rutas de prueba básicas (puedes agregar más luego)
-router.get('/test', (req, res) => {
-  res.json({ message: 'Ruta /api/test funcionando correctamente 🚀' });
-});
+// Conectar routers importados
+router.use("/auth", authRoutes);
+router.use("/usuarios", userRoutes);
 
 export default router;
