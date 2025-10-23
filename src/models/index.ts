@@ -11,7 +11,7 @@ export const initModels = async () => {
   DetallePedido.belongsTo(Pedido, { foreignKey: "pedido_id" });
   DetallePedido.belongsTo(Producto, { foreignKey: "producto_id" });
 
-  await sequelize.sync({ alter: true });
+  await sequelize.sync({ alter: false, force: false });
   console.log(" Modelos sincronizados correctamente");
 };
 

@@ -1,9 +1,23 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../config/db.js";
+import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType } from "sequelize-typescript";
 
-export const Cliente = sequelize.define("Cliente", {
-  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-  nombre: { type: DataTypes.STRING(100), allowNull: false },
-  email: { type: DataTypes.STRING(100) },
-  telefono: { type: DataTypes.STRING(20) }
-});
+@Table({
+  tableName: "cliente",
+  timestamps: true,
+  createdAt: "created_at",
+  updatedAt: "updated_at",
+})
+export class Cliente extends Model<Cliente> {
+  @PrimaryKey
+  @AutoIncrement
+  @Column({ type: DataType.INTEGER })
+  declare id: number;
+
+  @Column({ type: DataType.STRING, allowNull: false })
+  nombre!: string;
+
+  @Column({ type: DataType.STRING })
+  email!: string;
+
+  @Column({ type: DataType.STRING })
+  telefono!: string;
+}

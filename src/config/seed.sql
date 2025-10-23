@@ -11,3 +11,4 @@ VALUES
   ('Guantes de arquero', 'Guantes con protección en dedos', 120000, 10, '222'),
   ('Camiseta deportiva', 'Camiseta transpirable talla M', 45000, 30, '333')
 ON CONFLICT DO NOTHING;
+
