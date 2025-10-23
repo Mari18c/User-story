@@ -1,32 +1,9 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { DataTypes } from "sequelize";
+import { sequelize } from "../config/db.js";
 
-const ClienteModel = (sequelize: Sequelize) => {
-  return sequelize.define('cliente', {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    nombre: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-    },
-    telefono: {
-      type: DataTypes.STRING(20),
-      allowNull: true,
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-  }, {
-    tableName: 'cliente',
-    timestamps: false,
-  });
-};
-
-export default ClienteModel;
+export const Cliente = sequelize.define("Cliente", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  nombre: { type: DataTypes.STRING(100), allowNull: false },
+  email: { type: DataTypes.STRING(100) },
+  telefono: { type: DataTypes.STRING(20) }
+});

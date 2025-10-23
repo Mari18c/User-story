@@ -1,33 +1,28 @@
 services:
-  postgres:
-    image: postgres:15
-    container_name: userstory_db
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: userstory_db
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./schema.sql:/docker-entrypoint-initdb.d/1_schema.sql
-      - ./seed.sql:/docker-entrypoint-initdb.d/2_seed.sql
-
-  backend:
+  userstory_api:
     build: .
     container_name: userstory_api
-    restart: always
-    depends_on:
-      - postgres
     ports:
       - "3008:3008"
-    env_file:
-      - .env
-    volumes:
-      - .:/app
-      - /app/node_modules
-    command: npm run dev
+    environment:
+      - NODE_ENV=development
+      - PORT=3008
+      - DATABASE_URL=${DATABASE_URL}
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    restart: unless-stopped
+    depends_on:
+      - db
 
-volumes:
-  postgres_data:
+  db:
+    image: postgres:22
+    container_name: userstory_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: userstory
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
