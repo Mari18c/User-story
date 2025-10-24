@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
 import { connectDB, sequelize } from "./config/db.js";
+import productRoutes from "./routes/product.routes.js";
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 // Rutas de Auth (register, login, refresh)
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
 // Ruta de prueba
 app.get("/api", (req, res) => res.json({ message: "API funcionando" }));
