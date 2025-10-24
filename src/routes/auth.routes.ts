@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
 // Login
 router.post("/login", async (req, res) => {
   try {
-    console.log("pepe");
+  
     
     const tokens = await AuthService.login(req.body);
     res.json(tokens);
