@@ -2,6 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
 import { connectDB, sequelize } from "./config/db.js";
+import productRoutes from "./routes/product.routes.js";
+import clienteRoutes from "./routes/client.routes.js";
+import routes from "./routes/index.js"; 
+
 
 dotenv.config();
 
@@ -12,8 +16,11 @@ app.use(express.json());
 
 // Rutas de Auth (register, login, refresh)
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/clientes", clienteRoutes);
+app.use("/api", routes);
 
-// Ruta de prueba
+// Ruta de prueba 
 app.get("/api", (req, res) => res.json({ message: "API funcionando" }));
 
 // Sincronizar modelos con la DB

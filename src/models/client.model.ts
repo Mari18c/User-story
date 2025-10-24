@@ -2,7 +2,7 @@ import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType } from "seque
 
 @Table({
   tableName: "cliente",
-  timestamps: true,
+  timestamps: false,
   createdAt: "created_at",
   updatedAt: "updated_at",
 })

@@ -22,8 +22,8 @@ export const connectDB = async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync(); // sincroniza modelos con tablas existentes
-    console.log("✅ Conectado y modelos sincronizados correctamente");
+    console.log(" Conectado y modelos sincronizados correctamente");
   } catch (error) {
-    console.error("❌ Error al conectar o sincronizar:", error);
+    console.error("Error al conectar o sincronizar:", error);
   }
 };

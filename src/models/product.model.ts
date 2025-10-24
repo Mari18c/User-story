@@ -1,10 +1,16 @@
-import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType, Unique } from "sequelize-typescript";
+import {
+  Table,
+  Column,
+  Model,
+  PrimaryKey,
+  AutoIncrement,
+  DataType,
+  Unique,
+} from "sequelize-typescript";
 
 @Table({
   tableName: "producto",
-  timestamps: true,
-  createdAt: "created_at",
-  updatedAt: "updated_at",
+  timestamps: false,  
 })
 export class Producto extends Model<Producto> {
   @PrimaryKey
@@ -15,8 +21,8 @@ export class Producto extends Model<Producto> {
   @Column({ type: DataType.STRING, allowNull: false })
   nombre!: string;
 
-  @Column({ type: DataType.TEXT })
-  descripcion!: string;
+  @Column({ type: DataType.TEXT, allowNull: true })
+  descripcion?: string;
 
   @Column({ type: DataType.DECIMAL(10, 2), allowNull: false })
   precio!: number;
