@@ -1,19 +1,24 @@
 {
   "name": "userstory",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
+  "main": "dist/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --watchAll=false"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mari18c/User-story.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mariana Carmona",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Mari18c/User-story/issues"
   },
@@ -22,11 +27,13 @@
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.9.1",
-    "nodemon": "^3.1.10",
-    "ts-node-dev": "^2.0.0",
-    "tsc": "^2.0.4",
+    "@types/supertest": "^6.0.3",
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.5",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   },
@@ -38,6 +45,7 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "sequelize-typescript": "^2.1.6"
   }
 }
