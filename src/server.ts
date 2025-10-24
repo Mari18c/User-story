@@ -7,6 +7,7 @@ import clienteRoutes from "./routes/client.routes.js";
 import routes from "./routes/index.js"; 
 
 
+
 dotenv.config();
 
 const app = express();
@@ -17,7 +18,7 @@ app.use(express.json());
 // Rutas de Auth (register, login, refresh)
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
-app.use("/clientes", clienteRoutes);
+app.use("/api/clientes", clienteRoutes);
 app.use("/api", routes);
 
 // Ruta de prueba 

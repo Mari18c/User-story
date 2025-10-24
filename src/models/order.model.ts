@@ -8,7 +8,7 @@ import { Usuario } from "./user.model.js";
   createdAt: "fecha",
   updatedAt: false,
 })
-export class Pedido extends Model<Pedido> {
+export class Pedido extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column({ type: DataType.INTEGER })
@@ -16,16 +16,16 @@ export class Pedido extends Model<Pedido> {
 
   @ForeignKey(() => Cliente)
   @Column({ type: DataType.INTEGER, allowNull: false })
-  cliente_id!: number;
+  declare cliente_id: number;
 
   @ForeignKey(() => Usuario)
   @Column({ type: DataType.INTEGER })
-  usuario_id!: number;
+  declare usuario_id: number;
 
   @Default("pendiente")
   @Column({ type: DataType.ENUM("pendiente", "pagado", "cancelado") })
-  estado!: string;
+  declare estado: string;
 
   @Column({ type: DataType.DECIMAL(12, 2), defaultValue: 0 })
-  total!: number;
+  declare total: number;
 }

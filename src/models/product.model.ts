@@ -12,25 +12,25 @@ import {
   tableName: "producto",
   timestamps: false,  
 })
-export class Producto extends Model<Producto> {
+export class Producto extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column({ type: DataType.INTEGER })
   declare id: number;
 
   @Column({ type: DataType.STRING, allowNull: false })
-  nombre!: string;
+  declare nombre: string;
 
   @Column({ type: DataType.TEXT, allowNull: true })
-  descripcion?: string;
+  declare descripcion?: string;
 
   @Column({ type: DataType.DECIMAL(10, 2), allowNull: false })
-  precio!: number;
+  declare precio: number;
 
   @Column({ type: DataType.INTEGER, defaultValue: 0 })
-  stock!: number;
+  declare stock: number;
 
   @Unique
   @Column({ type: DataType.STRING, allowNull: false })
-  codigo!: string;
+  declare codigo: string;
 }

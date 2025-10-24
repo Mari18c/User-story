@@ -6,18 +6,18 @@ import { Table, Column, Model, PrimaryKey, AutoIncrement, DataType } from "seque
   createdAt: "created_at",
   updatedAt: "updated_at",
 })
-export class Cliente extends Model<Cliente> {
+export class Cliente extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column({ type: DataType.INTEGER })
   declare id: number;
 
   @Column({ type: DataType.STRING, allowNull: false })
-  nombre!: string;
+  declare nombre: string;
 
   @Column({ type: DataType.STRING })
-  email!: string;
+  declare email: string;
 
   @Column({ type: DataType.STRING })
-  telefono!: string;
+  declare telefono: string;
 }
