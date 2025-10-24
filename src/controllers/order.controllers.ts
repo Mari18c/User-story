@@ -32,8 +32,25 @@ export class PedidoController {
 
   static async obtenerPedidos(req: Request, res: Response) {
     try {
-      const pedidos = await PedidoService.obtenerPedidos();
-      res.json(pedidos);
+      const { cliente_id, producto_id } = req.query;
+      
+      const filtros: { cliente_id?: number; producto_id?: number } = {};
+      
+      if (cliente_id) {
+        filtros.cliente_id = Number(cliente_id);
+      }
+      
+      if (producto_id) {
+        filtros.producto_id = Number(producto_id);
+      }
+      
+      const pedidos = await PedidoService.obtenerPedidos(filtros);
+      res.json({
+        success: true,
+        data: pedidos,
+        total: pedidos.length,
+        filtros: filtros
+      });
     } catch (err: any) {
       res.status(500).json({ message: err.message });
     }
@@ -42,9 +59,15 @@ export class PedidoController {
   static async obtenerPedidoPorId(req: Request, res: Response) {
     try {
       const pedido = await PedidoService.obtenerPedidoPorId(Number(req.params.id));
-      res.json(pedido);
+      res.json({
+        success: true,
+        data: pedido
+      });
     } catch (err: any) {
-      res.status(404).json({ message: err.message });
+      res.status(404).json({ 
+        success: false,
+        message: err.message 
+      });
     }
   }
 }

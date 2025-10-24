@@ -96,12 +96,44 @@ export class PedidoService {
     });
   }
 
-  static async obtenerPedidos() {
-    return await Pedido.findAll({ include: [{ model: DetallePedido }, { model: Cliente }] });
+  static async obtenerPedidos(filtros?: { cliente_id?: number; producto_id?: number }) {
+    const whereClause: any = {};
+    const includeClause: any = [
+      { 
+        model: DetallePedido,
+        include: [{ model: Producto }]
+      }, 
+      { model: Cliente }
+    ];
+
+    // Filtro por cliente
+    if (filtros?.cliente_id) {
+      whereClause.cliente_id = filtros.cliente_id;
+    }
+
+    // Filtro por producto (a través de DetallePedido)
+    if (filtros?.producto_id) {
+      includeClause[0].where = { producto_id: filtros.producto_id };
+      includeClause[0].required = true; // INNER JOIN para filtrar por producto
+    }
+
+    return await Pedido.findAll({ 
+      where: whereClause,
+      include: includeClause,
+      order: [['fecha', 'DESC']] // Ordenar por fecha más reciente
+    });
   }
 
   static async obtenerPedidoPorId(id: number) {
-    const pedido = await Pedido.findByPk(id, { include: [{ model: DetallePedido }, { model: Cliente }] });
+    const pedido = await Pedido.findByPk(id, { 
+      include: [
+        { 
+          model: DetallePedido,
+          include: [{ model: Producto }]
+        }, 
+        { model: Cliente }
+      ] 
+    });
     if (!pedido) throw new Error("Pedido no encontrado");
     return pedido;
   }
