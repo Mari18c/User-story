@@ -21,6 +21,19 @@ export const sequelize = new Sequelize(process.env.DATABASE_URL!, {
 export const connectDB = async () => {
   try {
     await sequelize.authenticate();
+    
+    // Definir asociaciones
+    Pedido.belongsTo(Cliente, { foreignKey: "cliente_id" });
+    Pedido.belongsTo(Usuario, { foreignKey: "usuario_id" });
+    DetallePedido.belongsTo(Pedido, { foreignKey: "pedido_id" });
+    DetallePedido.belongsTo(Producto, { foreignKey: "producto_id" });
+    
+    // Asociaciones inversas
+    Cliente.hasMany(Pedido, { foreignKey: "cliente_id" });
+    Usuario.hasMany(Pedido, { foreignKey: "usuario_id" });
+    Pedido.hasMany(DetallePedido, { foreignKey: "pedido_id" });
+    Producto.hasMany(DetallePedido, { foreignKey: "producto_id" });
+    
     await sequelize.sync(); // sincroniza modelos con tablas existentes
     console.log(" Conectado y modelos sincronizados correctamente");
   } catch (error) {

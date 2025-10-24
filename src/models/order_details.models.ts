@@ -6,7 +6,7 @@ import { Producto } from "./product.model";
   tableName: "detalle_pedido",
   timestamps: false,
 })
-export class DetallePedido extends Model<DetallePedido> {
+export class DetallePedido extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column({ type: DataType.INTEGER })
@@ -14,24 +14,21 @@ export class DetallePedido extends Model<DetallePedido> {
 
   @ForeignKey(() => Pedido)
   @Column({ type: DataType.INTEGER, allowNull: false })
-  pedido_id!: number;
+  declare pedido_id: number;
 
   @ForeignKey(() => Producto)
   @Column({ type: DataType.INTEGER, allowNull: false })
-  producto_id!: number;
+  declare producto_id: number;
 
   @Column({ type: DataType.INTEGER, allowNull: false })
-  cantidad!: number;
+  declare cantidad: number;
 
   @Column({ type: DataType.DECIMAL(10, 2), allowNull: false })
-  precio_unitario!: number;
+  declare precio_unitario: number;
 
   @Column({
     type: DataType.DECIMAL(12, 2),
-    allowNull: false,
-    get() {
-      return Number(this.getDataValue("cantidad")) * Number(this.getDataValue("precio_unitario"));
-    },
+    allowNull: true,
   })
-  subtotal!: number;
+  declare subtotal: number;
 }
